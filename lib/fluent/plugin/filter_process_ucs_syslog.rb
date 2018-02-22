@@ -23,8 +23,15 @@ module Fluent::Plugin
 
       message = record["message"]
 
-      record["event"] = determineEvent(message)
-      record["stage"] = determineStage(message)
+      event = determineEvent(message)
+      if !event.nil?
+        record["event"] = event
+      end
+
+      stage = determineStage(message)
+      if !stage.nil?
+        record["stage"] = stage
+      end
 
       if message !~ @@bladeRegex
         return record
